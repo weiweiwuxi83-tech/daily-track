@@ -2,20 +2,44 @@
   "update_date": "2026-08-15",
   "commodities": [
     {
-      "name": "LME铜",
-      "price": "$14,545",
-      "daily": "+1.2%",
-      "five_day": "+3.8%",
-      "twenty_day": "+7.5%",
-      "ytd": "+18%"
-    },
-    {
       "name": "SHFE铜",
       "price": "¥...",
       "daily": "+0.8%",
       "five_day": "+2.9%",
       "twenty_day": "+6.1%",
       "ytd": "+15%"
+    },
+    {
+      "name": "SHFE铝",
+      "price": "¥...",
+      "daily": "+0.6%",
+      "five_day": "+1.7%",
+      "twenty_day": "+4.3%",
+      "ytd": "+9%"
+    },
+    {
+      "name": "SHFE黄金",
+      "price": "¥...",
+      "daily": "+0.4%",
+      "five_day": "+1.2%",
+      "twenty_day": "+3.9%",
+      "ytd": "+11%"
+    },
+    {
+      "name": "SHFE白银",
+      "price": "¥...",
+      "daily": "+1.1%",
+      "five_day": "+3.4%",
+      "twenty_day": "+7.8%",
+      "ytd": "+17%"
+    },
+    {
+      "name": "SHFE螺纹钢",
+      "price": "¥...",
+      "daily": "-0.3%",
+      "five_day": "-1.6%",
+      "twenty_day": "-4.4%",
+      "ytd": "-2%"
     },
     {
       "name": "碳酸锂",
@@ -26,12 +50,12 @@
       "ytd": "+12%"
     },
     {
-      "name": "铁矿石",
-      "price": "¥...",
-      "daily": "+0.4%",
-      "five_day": "-1.8%",
-      "twenty_day": "-6.2%",
-      "ytd": "-9%"
+      "name": "布伦特石油",
+      "price": "$...",
+      "daily": "+0.9%",
+      "five_day": "+2.1%",
+      "twenty_day": "+5.6%",
+      "ytd": "+8%"
     }
   ]
 }
