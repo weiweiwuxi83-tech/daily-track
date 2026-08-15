@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Track - 商品价格看板</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 商品价格看板</h1>
+            <div class="update-date" id="updateDate"></div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>商品</th>
+                    <th>收盘</th>
+                    <th class="data-column">日</th>
+                    <th class="data-column">5日</th>
+                    <th class="data-column">20日</th>
+                    <th class="data-column">YTD</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- 数据会在这里插入 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 从 data.json 加载数据
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                
+                // 显示更新日期
+                document.getElementById('updateDate').textContent = `更新于: ${data.update_date}`;
+                
+                // 填充表格
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = '';
+                
+                data.commodities.forEach(commodity => {
+                    const row = document.createElement('tr');
+                    
+                    // 判断是否为正数或负数
+                    const getClass = (value) => {
+                        const numValue = parseFloat(value);
+                        return numValue >= 0 ? 'positive' : 'negative';
+                    };
+                    
+                    row.innerHTML = `
+                        <td class="commodity-name">${commodity.name}</td>
+                        <td class="price">${commodity.price}</td>
+                        <td class="data-column ${getClass(commodity.daily)}">${commodity.daily}</td>
+                        <td class="data-column ${getClass(commodity.five_day)}">${commodity.five_day}</td>
+                        <td class="data-column ${getClass(commodity.twenty_day)}">${commodity.twenty_day}</td>
+                        <td class="data-column ${getClass(commodity.ytd)}">${commodity.ytd}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; color: red;">加载数据失败，请检查 data.json 文件</td></tr>';
+            }
+        }
+        
+        // 页面加载时执行
+        loadData();
+    </script>
+</body>
+</html>
