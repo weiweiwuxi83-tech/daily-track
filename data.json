@@ -1,0 +1,37 @@
+{
+  "update_date": "2026-08-15",
+  "commodities": [
+    {
+      "name": "LME铜",
+      "price": "$14,545",
+      "daily": "+1.2%",
+      "five_day": "+3.8%",
+      "twenty_day": "+7.5%",
+      "ytd": "+18%"
+    },
+    {
+      "name": "SHFE铜",
+      "price": "¥...",
+      "daily": "+0.8%",
+      "five_day": "+2.9%",
+      "twenty_day": "+6.1%",
+      "ytd": "+15%"
+    },
+    {
+      "name": "碳酸锂",
+      "price": "¥...",
+      "daily": "-1.5%",
+      "five_day": "-4.2%",
+      "twenty_day": "-8.7%",
+      "ytd": "+12%"
+    },
+    {
+      "name": "铁矿石",
+      "price": "¥...",
+      "daily": "+0.4%",
+      "five_day": "-1.8%",
+      "twenty_day": "-6.2%",
+      "ytd": "-9%"
+    }
+  ]
+}
