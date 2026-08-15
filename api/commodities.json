@@ -1,0 +1,83 @@
+{
+  "update_date": "2026-08-15",
+  "market_closed": true,
+  "commodities": [
+    {
+      "name": "上海期货交易所-铜",
+      "symbol": "SHFE.CU",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "上海期货交易所-铝",
+      "symbol": "SHFE.AL",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "上海期货交易所-黄金",
+      "symbol": "SHFE.AU",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "上海期货交易所-白银",
+      "symbol": "SHFE.AG",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "上海期货交易所-螺纹钢",
+      "symbol": "SHFE.RB",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "碳酸锂期货",
+      "symbol": "LL",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    },
+    {
+      "name": "布伦特原油",
+      "symbol": "BRT",
+      "price": "待更新",
+      "last_close": "待更新",
+      "market_closed": true,
+      "daily": "—",
+      "five_day": "—",
+      "twenty_day": "—",
+      "ytd": "—"
+    }
+  ]
+}
