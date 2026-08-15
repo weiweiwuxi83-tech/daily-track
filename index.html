@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Daily Track - 商品价格看板</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260815-1">
 </head>
 <body>
     <div class="container">
@@ -31,21 +34,34 @@
     </div>
 
     <script>
+        const CACHE_VERSION = '20260815-1';
+
         const fallbackData = {
             update_date: '2026-08-15',
+            market_closed: true,
             commodities: [
-                { name: 'SHFE铜', price: '¥...', daily: '+0.8%', five_day: '+2.9%', twenty_day: '+6.1%', ytd: '+15%' },
-                { name: 'SHFE铝', price: '¥...', daily: '+0.6%', five_day: '+1.7%', twenty_day: '+4.3%', ytd: '+9%' },
-                { name: 'SHFE黄金', price: '¥...', daily: '+0.4%', five_day: '+1.2%', twenty_day: '+3.9%', ytd: '+11%' },
-                { name: 'SHFE白银', price: '¥...', daily: '+1.1%', five_day: '+3.4%', twenty_day: '+7.8%', ytd: '+17%' },
-                { name: 'SHFE螺纹钢', price: '¥...', daily: '-0.3%', five_day: '-1.6%', twenty_day: '-4.4%', ytd: '-2%' },
-                { name: '碳酸锂', price: '¥...', daily: '-1.5%', five_day: '-4.2%', twenty_day: '-8.7%', ytd: '+12%' },
-                { name: '布伦特石油', price: '$...', daily: '+0.9%', five_day: '+2.1%', twenty_day: '+5.6%', ytd: '+8%' }
+                { name: 'SHFE铜', price: '¥...', last_close: '¥71,250', market_closed: true, daily: '+0.8%', five_day: '+2.9%', twenty_day: '+6.1%', ytd: '+15%' },
+                { name: 'SHFE铝', price: '¥...', last_close: '¥20,680', market_closed: true, daily: '+0.6%', five_day: '+1.7%', twenty_day: '+4.3%', ytd: '+9%' },
+                { name: 'SHFE黄金', price: '¥...', last_close: '¥560.40', market_closed: true, daily: '+0.4%', five_day: '+1.2%', twenty_day: '+3.9%', ytd: '+11%' },
+                { name: 'SHFE白银', price: '¥...', last_close: '¥8,960', market_closed: true, daily: '+1.1%', five_day: '+3.4%', twenty_day: '+7.8%', ytd: '+17%' },
+                { name: 'SHFE螺纹钢', price: '¥...', last_close: '¥4,680', market_closed: true, daily: '-0.3%', five_day: '-1.6%', twenty_day: '-4.4%', ytd: '-2%' },
+                { name: '碳酸锂', price: '¥...', last_close: '¥207,500', market_closed: true, daily: '-1.5%', five_day: '-4.2%', twenty_day: '-8.7%', ytd: '+12%' },
+                { name: '布伦特石油', price: '$...', last_close: '$78.60', market_closed: true, daily: '+0.9%', five_day: '+2.1%', twenty_day: '+5.6%', ytd: '+8%' }
             ]
         };
 
+        function getDisplayPrice(commodity) {
+            if (commodity.market_closed && commodity.last_close) {
+                return `${commodity.last_close}（最近交易日）`;
+            }
+            return commodity.price || commodity.last_close || '—';
+        }
+
         function renderTable(data) {
-            document.getElementById('updateDate').textContent = `更新于: ${data.update_date}`;
+            const summaryText = data.market_closed
+                ? `更新于: ${data.update_date}（按最近交易日收盘价）`
+                : `更新于: ${data.update_date}`;
+            document.getElementById('updateDate').textContent = summaryText;
 
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
@@ -60,7 +76,7 @@
 
                 row.innerHTML = `
                     <td class="commodity-name">${commodity.name}</td>
-                    <td class="price">${commodity.price}</td>
+                    <td class="price">${getDisplayPrice(commodity)}</td>
                     <td class="data-column ${getClass(commodity.daily)}">${commodity.daily}</td>
                     <td class="data-column ${getClass(commodity.five_day)}">${commodity.five_day}</td>
                     <td class="data-column ${getClass(commodity.twenty_day)}">${commodity.twenty_day}</td>
@@ -73,7 +89,7 @@
 
         async function loadData() {
             try {
-                const response = await fetch('data.json');
+                const response = await fetch(`data.json?v=${CACHE_VERSION}`);
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
