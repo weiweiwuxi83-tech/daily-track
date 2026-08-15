@@ -1,14 +1,14 @@
 {
-  "update_date": "2026-08-15",
+  "update_date": "2026-08-15 14:03:51",
   "market_closed": true,
   "commodities": [
     {
       "name": "上海期货交易所-铜",
       "symbol": "SHFE.CU",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "6.6",
+      "last_close": "6.59",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+0.11%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -16,10 +16,10 @@
     {
       "name": "上海期货交易所-铝",
       "symbol": "SHFE.AL",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "2.58",
+      "last_close": "2.57",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+0.39%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -27,10 +27,10 @@
     {
       "name": "上海期货交易所-黄金",
       "symbol": "SHFE.AU",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "4380.4",
+      "last_close": "4363.6",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+0.38%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -38,10 +38,10 @@
     {
       "name": "上海期货交易所-白银",
       "symbol": "SHFE.AG",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "64.99",
+      "last_close": "64.87",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+0.18%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -49,10 +49,10 @@
     {
       "name": "上海期货交易所-螺纹钢",
       "symbol": "SHFE.RB",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "3950",
+      "last_close": "3920",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+0.76%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -60,10 +60,10 @@
     {
       "name": "碳酸锂期货",
       "symbol": "LL",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "185",
+      "last_close": "183",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+1.09%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
@@ -71,10 +71,10 @@
     {
       "name": "布伦特原油",
       "symbol": "BRT",
-      "price": "待更新",
-      "last_close": "待更新",
+      "price": "88.52",
+      "last_close": "87.07",
       "market_closed": true,
-      "daily": "—",
+      "daily": "+1.67%",
       "five_day": "—",
       "twenty_day": "—",
       "ytd": "—"
