@@ -34,32 +34,51 @@
     </div>
 
     <script>
-        const CACHE_VERSION = '20260815-1';
+        const CACHE_VERSION = '20260815-2';
+        const LIVE_API_URL = 'https://example.com/api/commodities';
 
         const fallbackData = {
             update_date: '2026-08-15',
             market_closed: true,
             commodities: [
-                { name: 'SHFE铜', price: '¥...', last_close: '¥71,250', market_closed: true, daily: '+0.8%', five_day: '+2.9%', twenty_day: '+6.1%', ytd: '+15%' },
-                { name: 'SHFE铝', price: '¥...', last_close: '¥20,680', market_closed: true, daily: '+0.6%', five_day: '+1.7%', twenty_day: '+4.3%', ytd: '+9%' },
-                { name: 'SHFE黄金', price: '¥...', last_close: '¥560.40', market_closed: true, daily: '+0.4%', five_day: '+1.2%', twenty_day: '+3.9%', ytd: '+11%' },
-                { name: 'SHFE白银', price: '¥...', last_close: '¥8,960', market_closed: true, daily: '+1.1%', five_day: '+3.4%', twenty_day: '+7.8%', ytd: '+17%' },
-                { name: 'SHFE螺纹钢', price: '¥...', last_close: '¥4,680', market_closed: true, daily: '-0.3%', five_day: '-1.6%', twenty_day: '-4.4%', ytd: '-2%' },
-                { name: '碳酸锂', price: '¥...', last_close: '¥207,500', market_closed: true, daily: '-1.5%', five_day: '-4.2%', twenty_day: '-8.7%', ytd: '+12%' },
-                { name: '布伦特石油', price: '$...', last_close: '$78.60', market_closed: true, daily: '+0.9%', five_day: '+2.1%', twenty_day: '+5.6%', ytd: '+8%' }
+                { name: '上海期货交易所-铜', source: '上海期货交易所（SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '上海期货交易所-铝', source: '上海期货交易所（SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '上海期货交易所-黄金', source: '上海期货交易所（SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '上海期货交易所-白银', source: '上海期货交易所（SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '上海期货交易所-螺纹钢', source: '上海期货交易所（SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '碳酸锂期货', source: '广州期货交易所/相关市场（非 SHFE）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' },
+                { name: '布伦特原油', source: 'ICE布伦特（国际市场，不是大陆交易所）', price: '待更新', last_close: '待更新', market_closed: true, daily: '—', five_day: '—', twenty_day: '—', ytd: '—' }
             ]
         };
 
+        function normalizeCommodity(item) {
+            return {
+                name: item.name || item.symbol || '未知商品',
+                price: item.price || item.latestPrice || item.last_close || '待更新',
+                last_close: item.last_close || item.previousClose || item.close || '待更新',
+                market_closed: Boolean(item.market_closed),
+                daily: item.daily || item.changePct || '—',
+                five_day: item.five_day || item.change5d || '—',
+                twenty_day: item.twenty_day || item.change20d || '—',
+                ytd: item.ytd || item.ytdChange || '—'
+            };
+        }
+
         function getDisplayPrice(commodity) {
-            if (commodity.market_closed && commodity.last_close) {
+            if (commodity.market_closed && commodity.last_close && commodity.last_close !== '待更新') {
                 return `${commodity.last_close}（最近交易日）`;
             }
             return commodity.price || commodity.last_close || '—';
         }
 
         function renderTable(data) {
+            if (!data || !Array.isArray(data.commodities)) {
+                renderTable(fallbackData);
+                return;
+            }
+
             const summaryText = data.market_closed
-                ? `更新于: ${data.update_date}（按最近交易日收盘价）`
+                ? `更新于: ${data.update_date}（按最近交易日收盘价，如未更新则显示待更新）`
                 : `更新于: ${data.update_date}`;
             document.getElementById('updateDate').textContent = summaryText;
 
@@ -67,20 +86,22 @@
             tableBody.innerHTML = '';
 
             data.commodities.forEach(commodity => {
+                const normalized = normalizeCommodity(commodity);
                 const row = document.createElement('tr');
 
                 const getClass = (value) => {
+                    if (value === '—' || value === '待更新') return '';
                     const numValue = parseFloat(value);
                     return numValue >= 0 ? 'positive' : 'negative';
                 };
 
                 row.innerHTML = `
-                    <td class="commodity-name">${commodity.name}</td>
-                    <td class="price">${getDisplayPrice(commodity)}</td>
-                    <td class="data-column ${getClass(commodity.daily)}">${commodity.daily}</td>
-                    <td class="data-column ${getClass(commodity.five_day)}">${commodity.five_day}</td>
-                    <td class="data-column ${getClass(commodity.twenty_day)}">${commodity.twenty_day}</td>
-                    <td class="data-column ${getClass(commodity.ytd)}">${commodity.ytd}</td>
+                    <td class="commodity-name">${normalized.name}</td>
+                    <td class="price">${getDisplayPrice(normalized)}</td>
+                    <td class="data-column ${getClass(normalized.daily)}">${normalized.daily}</td>
+                    <td class="data-column ${getClass(normalized.five_day)}">${normalized.five_day}</td>
+                    <td class="data-column ${getClass(normalized.twenty_day)}">${normalized.twenty_day}</td>
+                    <td class="data-column ${getClass(normalized.ytd)}">${normalized.ytd}</td>
                 `;
 
                 tableBody.appendChild(row);
@@ -88,17 +109,27 @@
         }
 
         async function loadData() {
-            try {
-                const response = await fetch(`data.json?v=${CACHE_VERSION}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+            const sources = [
+                { url: LIVE_API_URL, label: 'live' },
+                { url: `data.json?v=${CACHE_VERSION}`, label: 'local' }
+            ];
+
+            for (const source of sources) {
+                try {
+                    const response = await fetch(source.url, { cache: 'no-store' });
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    const data = await response.json();
+                    renderTable(data);
+                    return;
+                } catch (error) {
+                    console.warn(`加载 ${source.label} 数据失败:`, error);
                 }
-                const data = await response.json();
-                renderTable(data);
-            } catch (error) {
-                console.warn('加载 data.json 失败，使用内置备用数据:', error);
-                renderTable(fallbackData);
             }
+
+            console.warn('所有数据源失败，使用内置备用数据');
+            renderTable(fallbackData);
         }
 
         loadData();
