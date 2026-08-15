@@ -19,6 +19,33 @@
 ### 3. 查看更新
 刷新浏览器，看板会显示最新数据。
 
+### 4. 接入真实行情 API
+在 `index.html` 中将 `LIVE_API_URL` 改成真实接口地址即可。浏览器会优先尝试调用该接口，失败时自动回退到本地 `data.json`。
+
+示例接口返回格式：
+
+```json
+{
+  "update_date": "2026-08-15",
+  "market_closed": true,
+  "commodities": [
+    {
+      "name": "上海期货交易所-铜",
+      "symbol": "SHFE.CU",
+      "price": "74250",
+      "last_close": "73880",
+      "market_closed": true,
+      "daily": "+0.8%",
+      "five_day": "+2.9%",
+      "twenty_day": "+6.1%",
+      "ytd": "+15%"
+    }
+  ]
+}
+```
+
+注意：GitHub Pages 是静态站点，如果真实行情 API 不支持 CORS，需要在后端增加代理接口，前端再请求代理地址。
+
 ## 在线查看
 启用 GitHub Pages 后，可以通过以下链接在线查看：
 `https://weiweiwuxi83-tech.github.io/daily-track/`

@@ -34,8 +34,8 @@
     </div>
 
     <script>
-        const CACHE_VERSION = '20260815-2';
-        const LIVE_API_URL = 'https://example.com/api/commodities';
+        const CACHE_VERSION = '20260815-3';
+        const LIVE_API_URL = '';
 
         const fallbackData = {
             update_date: '2026-08-15',
@@ -52,15 +52,17 @@
         };
 
         function normalizeCommodity(item) {
+            const normalized = item || {};
+            const marketClosedValue = normalized.market_closed;
             return {
-                name: item.name || item.symbol || '未知商品',
-                price: item.price || item.latestPrice || item.last_close || '待更新',
-                last_close: item.last_close || item.previousClose || item.close || '待更新',
-                market_closed: Boolean(item.market_closed),
-                daily: item.daily || item.changePct || '—',
-                five_day: item.five_day || item.change5d || '—',
-                twenty_day: item.twenty_day || item.change20d || '—',
-                ytd: item.ytd || item.ytdChange || '—'
+                name: normalized.name || normalized.symbol || '未知商品',
+                price: normalized.price || normalized.latestPrice || normalized.last_close || '待更新',
+                last_close: normalized.last_close || normalized.previousClose || normalized.close || '待更新',
+                market_closed: typeof marketClosedValue === 'string' ? marketClosedValue.toLowerCase() === 'true' : Boolean(marketClosedValue),
+                daily: normalized.daily || normalized.changePct || '—',
+                five_day: normalized.five_day || normalized.change5d || '—',
+                twenty_day: normalized.twenty_day || normalized.change20d || '—',
+                ytd: normalized.ytd || normalized.ytdChange || '—'
             };
         }
 
@@ -110,7 +112,7 @@
 
         async function loadData() {
             const sources = [
-                { url: LIVE_API_URL, label: 'live' },
+                ...(LIVE_API_URL ? [{ url: LIVE_API_URL, label: 'live' }] : []),
                 { url: `data.json?v=${CACHE_VERSION}`, label: 'local' }
             ];
 
